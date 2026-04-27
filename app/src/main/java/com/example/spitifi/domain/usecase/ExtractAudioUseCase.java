@@ -1,20 +1,16 @@
 package com.example.spitifi.domain.usecase;
-import com.arthenica.ffmpegkit.FFmpegKit;
-import com.arthenica.ffmpegkit.ReturnCode;
 
+import com.example.spitifi.data.api.ConvertResponse;
+import com.example.spitifi.data.repository.AudioRepositoryImpl;
+
+import java.io.File;
+import retrofit2.Call;
 public class ExtractAudioUseCase {
-    public interface Callback{
-        void onSuccess(String mp3Path);
-        void onError(String error);
+    private final AudioRepositoryImpl  audioRepository;
+    public ExtractAudioUseCase(){
+        audioRepository = new AudioRepositoryImpl();
     }
-    private void execute(String videoPath, String mp3Path, Callback callback){
-        String cmd = "-i \"" + videoPath + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputPath + "\"";
-        FFmpegKit.executeAsync(cmd, session -> {
-            if (ReturnCode.isSuccess(session.getReturnCode())) {
-                callback.onSuccess(outputPath);
-            } else {
-                callback.onError("Convert lỗi");
-            }
-        });
+    public Call<ConvertResponse> execute(String url, String tag, String title) {
+        return audioRepository.convertTikTokUrl(url, tag, title);
     }
 }

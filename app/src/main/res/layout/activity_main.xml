@@ -20,5 +20,10 @@
         android:layout_height="wrap_content"
         android:text="Chuyển sang MP3"
         android:layout_marginTop="16dp" />
+    <Spinner
+        android:id="@+id/spinnerTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>
